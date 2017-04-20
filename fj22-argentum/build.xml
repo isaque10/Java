@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ====================================================================== 
+     8 de fev de 2017 15:13:58                                                        
+
+     Argentum    
+     description
+                   
+     Samsung                                                                
+     ====================================================================== -->
+<project name="Argentum" default="empacotar">
+    
+    <target name="compilar" >
+    	
+    	<delete dir="bin" />
+    	<mkdir dir="bin" />
+    	
+    	<javac srcdir="src/main/java" destdir="bin" >
+	    	<classpath>
+		    	<fileset dir="lib">
+		    		<include name="*.jar" />
+		    	</fileset>
+	    	</classpath>
+    	</javac>
+    </target>
+
+	<target name="empacotar" depends="compilar">
+		<mkdir dir="jar" />
+		<jar destfile="jar/argentum.jar" basedir="bin"/>
+		
+	</target>
+	
+	<target name="executar" depends="empacotar">
+		<java classname="br.com.caelum.argentum.ui.ArgentumUI" fork="true">
+			<classpath>
+				<filelist files="jar/argentum.jar" />
+					<fileset dir="lib">
+    					<include name="*.jar"/>
+					</fileset>
+			</classpath>
+		</java>
+	</target>
+	
+</project>
